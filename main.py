@@ -1,15 +1,9 @@
-
 FILE_NAME = "attendance.txt"
 students = []
-
-
-# Load data from file
 def load_data():
     global students
-
     try:
         file = open(FILE_NAME, "r")
-
         for line in file:
             data = line.strip().split("|")
 
@@ -21,17 +15,11 @@ def load_data():
                     "attended": int(data[3])
                 }
                 students.append(student)
-
         file.close()
-
     except FileNotFoundError:
         students = []
-
-
-# Save data to file
 def save_data():
     file = open(FILE_NAME, "w")
-
     for student in students:
         file.write(
             str(student["roll"]) + "|" +
@@ -39,11 +27,7 @@ def save_data():
             str(student["held"]) + "|" +
             str(student["attended"]) + "\n"
         )
-
     file.close()
-
-
-# Add student
 def add_student():
     roll = int(input("Enter Roll Number: "))
 
@@ -53,22 +37,18 @@ def add_student():
             return
 
     name = input("Enter Student Name: ")
-
     student = {
         "roll": roll,
         "name": name,
         "held": 0,
         "attended": 0
     }
-
     students.append(student)
     save_data()
 
     print("Student added:", roll, "|", name,
           "| Held: 0 | Attended: 0")
 
-
-# Mark attendance
 def mark_attendance():
     roll = int(input("Enter Roll Number: "))
 
@@ -80,22 +60,16 @@ def mark_attendance():
             if status == "P":
                 student["held"] += 1
                 student["attended"] += 1
-
             elif status == "A":
                 student["held"] += 1
-
             else:
                 print("Invalid status. Enter P or A.")
                 return
-
             save_data()
             print("Attendance marked successfully.")
             return
-
     print("Roll number", roll, "not found.")
 
-
-# View attendance percentage
 def view_percentage():
     roll = int(input("Enter Roll Number: "))
 
@@ -117,8 +91,6 @@ def view_percentage():
 
     print("Roll number", roll, "not found.")
 
-
-# Shortage list
 def shortage_list():
     for student in students:
 
@@ -138,9 +110,6 @@ def shortage_list():
         else:
             print(student["name"],
                   "({:.2f}%) meets the requirement.".format(percentage))
-
-
-# Main menu
 def main():
     load_data()
 
